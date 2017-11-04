@@ -1,0 +1,33 @@
+---
+- hosts: rpi-04
+  user: pi
+  tasks:
+    - name: Run the equivalent of "apt-get update" as a separate step
+      apt:
+        update_cache: yes
+
+    - name: Update all packages to the latest version
+      apt:
+        upgrade: dist
+
+    - name: Install curl package
+      apt:
+        name: curl
+        state: present
+
+    - name: install docker
+      shell: curl https://get.docker.com | sudo bash
+
+    - name: manage docker permissions for normal user
+      command:  usermod -aG docker pi
+
+    - name: enable docker
+      service:
+        name: docker
+        enabled: yes
+
+    - name: start docker
+      service:
+        name: docker
+        state: started
+        enabled: True
