@@ -1,0 +1,14 @@
+- hosts: rpi-04
+  user: pi
+  tasks:
+    - name: Update and Upgrade
+      apt:
+        update_cache: yes
+        upgrade: dist
+
+    - name: Install list of packages
+      apt: name={{item}} state=installed
+      with_items:
+        - tcpdump
+        - python
+        - python-pip
