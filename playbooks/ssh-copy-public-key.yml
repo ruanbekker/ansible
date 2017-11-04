@@ -1,0 +1,9 @@
+---
+- hosts: rpi-04
+  user: pi
+  tasks:
+    - name: Copy User pi's public ssh key to remote authorized_keys file
+      authorized_key:
+        user: pi
+        state: present
+        key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
